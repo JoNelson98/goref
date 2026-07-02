@@ -2,23 +2,29 @@
 
 ## Card
 
-Add, update, or remove external package dependencies in your Go project using `go get`.
+Add, download, or update external package dependencies in your Go project using `go get`.
 
+### Syntax
 ```bash
-# Add a package
+go get <package_path>[@version]
+```
+
+### Quick Examples
+```bash
+# Add the latest version of UUID package
 go get github.com/google/uuid
 
-# Add a specific version
+# Pin to a specific semantic version
 go get github.com/google/uuid@v1.6.0
 
-# Remove a package dependency completely
+# Completely remove a dependency package
 go get github.com/google/uuid@none
 ```
 
 ### Subcard: Update Dependencies
 
 ```bash
-# Update a package to the latest minor/patch release
+# Update a package to its latest minor or patch release
 go get -u github.com/google/uuid
 ```
 

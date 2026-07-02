@@ -4,14 +4,17 @@
 
 Compile your Go application into a single, self-contained binary executable.
 
+### Syntax
 ```bash
-# Standard compile (defaults name to the directory name, e.g. "GOREF")
-go build
+go build -o <output_name> <path_to_package>
+```
 
-# Compile with a custom name
+### Quick Example
+```bash
+# Compile the current folder package into a binary named "myapp"
 go build -o myapp .
 
-# Cross-compilation (Build for Linux from macOS)
+# Cross-compilation (Build for Linux AMD64 from macOS)
 GOOS=linux GOARCH=amd64 go build -o myapp-linux .
 ```
 
@@ -24,44 +27,47 @@ go build -ldflags="-s -w" -o myapp .
 
 ## Example
 
-A full build scenario for packaging a clean Go application with custom binary targets and optimizations:
+Complete walkthrough of creating, compiling, and running a standalone Go binary:
 
-1. Verify your Go program runs and compiles locally:
-```bash
-go run .
+1. Create a minimal source file `main.go`:
+```go
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Hello, production-ready GoRef!")
+}
 ```
 
-2. Compile without the `-o` flag (Go names the binary after the current directory):
+2. Compile your application into a custom-named executable binary:
 ```bash
-# Suppose your current working folder is named "GOREF"
-go build .
-
-# Verify the newly created binary (named after the directory):
-ls
-# Output:
-# GOREF    main.go   tui.go    go.mod
-```
-
-3. Compile with an explicit custom name inside a target directory:
-```bash
+# Compile current package and output executable to build/ folder
 go build -o build/myapp .
 ```
 
-4. Compile an optimized, production-grade binary with stripped debug symbols (drastically reduces file size):
+3. Run the compiled standalone binary (no Go SDK required to run!):
 ```bash
-# -s strips debugging symbols, -w strips DWARF DWARF symbol tables
+./build/myapp
+
+# Expected Output:
+# Hello, production-ready GoRef!
+```
+
+4. Optimize and shrink the binary size for production release by stripping debug symbols:
+```bash
 go build -ldflags="-s -w" -o build/myapp-prod .
 
-# Check file sizes to see the savings:
+# Verify the file size savings:
 ls -lh build/
-# Output:
+# Expected Output:
 # -rwxr-xr-x  1 gopher  staff   6.4M Jun 30 12:00 myapp
 # -rwxr-xr-x  1 gopher  staff   4.2M Jun 30 12:01 myapp-prod  (35% smaller!)
 ```
 
-5. Cross-compile for a remote Linux server (AMD64 architecture) from your local machine:
+5. Cross-compile the exact same code for a Linux server (AMD64 architecture) from your local machine:
 ```bash
-GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o build/myapp-linux-amd64 .
+GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o build/myapp-linux .
 ```
 
 ## Deep
@@ -76,8 +82,8 @@ If you execute a build command **without the `-o` flag**, Go determines the outp
 3. **Building Specific Files (`go build main.go`)**: The compiler names the executable after the **first file argument** minus the `.go` extension.
    * *Example:* Running `go build main.go` produces a binary named **`main`**.
 
-### Cross-Compilation
-Cross-compilation is built-in. Set `GOOS` (operating system: `linux`, `darwin`, `windows`, `freebsd`) and `GOARCH` (architecture: `amd64`, `arm64`, `386`) variables before running the build command. No toolchains required!
+### Cross-Compilation Mechanics
+Go's compilation is unique because the compiler and linker are written entirely in Go and support cross-compilation out of the box with zero external dependencies, linkers, or GCC toolchains. Simply set the target `GOOS` and `GOARCH` environment variables, and the compiler compiles a native binary for that operating system.
 
 ## Gotchas
 

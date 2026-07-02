@@ -2,26 +2,30 @@
 
 ## Card
 
-Run unit tests and benchmarks in your Go project.
+Run unit tests and benchmarks inside your Go project.
 
+### Syntax
 ```bash
-# Run all tests in the current package
-go test .
+go test [flags] [packages]
+```
 
+### Quick Commands
+```bash
 # Run all tests in the project recursively (highly recommended!)
 go test -v ./...
-```
 
-### Subcard: Run Specific Test
-
-```bash
+# Run a specific unit test by name
 go test -run TestParseHeading -v .
+
+# Run tests and output statement coverage percentage
+go test -cover ./...
 ```
 
-### Subcard: Check Test Coverage
+### Subcard: Force Bypass Cache
 
 ```bash
-go test -cover .
+# Bypasses test cache and forces a fresh execution
+go test -count=1 ./...
 ```
 
 ## Example

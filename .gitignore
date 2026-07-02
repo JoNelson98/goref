@@ -1,5 +1,7 @@
+# Ignore compiled executables (GoRef binaries)
 /goref
-/GOREF 
+/GOREF
 /build/
 
+# Ignore local OS metadata
 .DS_Store

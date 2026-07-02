@@ -2,10 +2,20 @@
 
 ## Card
 
-Compile and run your Go program on the fly (useful for development).
+Compile and run your Go program on the fly (useful for fast local feedback).
 
+### Syntax
 ```bash
+go run <path_to_package_or_files> [arguments...]
+```
+
+### Quick Example
+```bash
+# Compile and run the current folder program
 go run .
+
+# Compile and pass flags/arguments to your program
+go run . -name=Alice
 ```
 
 ### Subcard: Run with Arguments
@@ -71,9 +81,10 @@ go run main.go -name=Alice
 ## Gotchas
 
 - **Never use `go run` in production:** It incurs compilation overhead on every launch and requires the Go SDK to be installed on the host machine. Statically compile executables using `go build` for deployment.
-- **Always run the directory:** Use `go run .` instead of `go run main.go` to ensure multi-file packages are compiled together.
+- **Do not import your own root:** Since all files in the directory share the same package, they do not need to (and cannot) import each other.
 
 ## Related
 
 - setup.project
 - cmd.build
+- setup.flat-layout

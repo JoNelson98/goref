@@ -2,19 +2,17 @@
 
 ## Card
 
-Clean up and sync your `go.mod` and `go.sum` files.
+Clean up, synchronize, and prune your `go.mod` and `go.sum` files.
 
+### Quick Command
 ```bash
 go mod tidy
 ```
 
-### Subcard: Remove Unused
-
-Removes imports that are no longer referenced in your codebase.
-
-### Subcard: Add Missing
-
-Downloads and adds modules referenced in your codebase but missing from `go.mod`.
+### What It Does
+- **Prunes Unused:** Removes module dependencies that are no longer imported in your code.
+- **Adds Missing:** Downloads and pins module dependencies referenced in your imports but missing from `go.mod`.
+- **Syncs Checksums:** Aligns and secures cryptographic hashes inside your project's `go.sum`.
 
 ## Example
 
